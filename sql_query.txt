@@ -1,0 +1,10 @@
+with recursive tree
+as 
+(
+		select ID, PARENT_ID, CONCAT('ROOT->', NAME) as NAME from `recursive`
+        where PARENT_ID = 0
+	union all
+		select r.ID, r.PARENT_ID, CONCAT(tree.NAME, ' -> ', r.NAME)
+        from tree inner join `recursive` r on tree.ID = r.PARENT_ID
+)
+select * FROM tree
